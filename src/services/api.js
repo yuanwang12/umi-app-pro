@@ -13,18 +13,11 @@ import fetch from 'dva/fetch';
  * @returns {Object} Promise
  */
 export const fetchLogin = (params) => {
-    return new Promise((resolve, reject) => {
-        debugger
-        fetch('/api/users/login', {
-            method: 'POST',
-            body: JSON.stringify(params.value),
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          }).then(res => {
-            resolve(res);
-          }).catch(err => {
-            reject(err);
-          })
-    })
+  return fetch('/api/users/login', {
+    method: 'POST',
+    body: JSON.stringify(params.value),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
 }

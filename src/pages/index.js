@@ -10,11 +10,14 @@
  * @copyright: Copyright (c) 2020, Hand
  */
 import React, { useState } from 'react';
-import { Button, notification } from 'antd';
+import { Button, notification, Layout } from 'antd';
 
-import FilterForm from './LoginForm';
+import LoginForm from './LoginForm';
+import MenuList from './MenuList';
 import styles from './index.scss';
 import { fetchLogin } from '../services/api';
+
+const { Content } = Layout;
 
 export default function () {
   const [visible, setVisible] = useState(false);
@@ -42,18 +45,18 @@ export default function () {
       if (!err) {
         setLoading(true);
         debugger
-        fetchLogin({value, setLoading, setVisible})
+        fetchLogin({ value, setLoading, setVisible })
           .then(res => {
             setLoading(false);
-            if(res.status === 200){
-                setVisible(false);
+            if (res.status === 200) {
+              setVisible(false);
               notification.success({
                 duration: 2,
                 message: '提示',
                 description:
                   '登录成功',
               });
-            }else{
+            } else {
               notification.warning({
                 duration: 2,
                 message: '提示',
@@ -83,25 +86,30 @@ export default function () {
   };
   return (
     <React.Fragment>
-      <div className={styles.normal}>
-        <div className={styles.welcome} />
-        <ul className={styles.list}>
-          <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
-          <li>
-            <a href="https://umijs.org/guide/getting-started.html">
-              Getting Started
+      <div className={styles['menu-list']}>
+        <MenuList />
+      </div>
+      <Content>
+        <div className={styles.normal}>
+          <div className={styles.welcome} />
+          <ul className={styles.list}>
+            <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
+            <li>
+              <a href="https://umijs.org/guide/getting-started.html">
+                Getting Started
             </a>
-          </li>
-        </ul>
-      </div>
-      <div className={styles['login-wrap']}>
-        <div className={styles['login']}>
-          <p>跟进你的学习状态</p>
-          <div className={styles['login-img']}></div>
+            </li>
+          </ul>
         </div>
-        <Button className={styles['login-button']} type="primary" onClick={handleLogin} block>登录</Button>
-      </div>
-      <FilterForm {...filterFormProps} />
+        <div className={styles['login-wrap']}>
+          <div className={styles['login']}>
+            <p>跟进你的学习状态</p>
+            <div className={styles['login-img']}></div>
+          </div>
+          <Button className={styles['login-button']} type="primary" onClick={handleLogin} block>登录</Button>
+        </div>
+        <LoginForm {...filterFormProps} />
+      </Content>
     </React.Fragment>
   );
 }
